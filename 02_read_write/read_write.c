@@ -67,7 +67,7 @@ static struct file_operations fops = {
 	.write = driver_write
 };
 
-static int __init hello_init(void) 
+static int __init ModuleInit(void) 
 { 
 	printk("Hello world!!!\n"); 
 
@@ -109,7 +109,7 @@ ClassError:
 	return -1; 
 } 
 
-static void __exit hello_exit(void) 
+static void __exit ModuleExit(void) 
 { 
 	cdev_del(&my_dev);
 	device_destroy(my_class, my_dev_num);
@@ -118,7 +118,11 @@ static void __exit hello_exit(void)
 	printk("Goodbye, world\n"); 
 } 
 
-module_init(hello_init); 
-module_exit(hello_exit); 
+module_init(ModuleInit); 
+module_exit(ModuleExit); 
 
+
+/* Meta Information */
 MODULE_LICENSE("GPL");
+MODULE_AUTHOR("Tsai Zhong-Han");
+MODULE_DESCRIPTION("A simple driver that reads and writes data to a buffer");

@@ -66,12 +66,12 @@ static ssize_t driver_write(struct file *file, const char *usr_buffer, size_t co
 }
 
 static int driver_open(struct inode *driver_file, struct file *instance){
-	printk("dev_num - open was called!\n");
+	printk("GPIO_Driver - open was called!\n");
 	return 0;
 }
 
 static int driver_close(struct inode *driver_file, struct file *instance){
-	printk("dev_num - close was called!\n");
+	printk("GPIO_Driver - close was called!\n");
 	return 0;
 }
 
@@ -92,7 +92,7 @@ static int __init hello_init(void)
 		printk("device number cant be allocated!\n");
 		return -1;
 	}
-	printk("read_write - device number Major: %d, Minor: %d was registered!\n", my_dev_num >> 20, my_dev_num && 0xfffff);
+	printk("Device number Major: %d, Minor: %d was registered!\n", my_dev_num >> 20, my_dev_num && 0xfffff);
 
 	/* create device class*/
 	if((my_class = class_create(DRIVER_CLASS)) == NULL){

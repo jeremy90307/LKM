@@ -45,15 +45,16 @@ unsigned int gpios[] = {
 
 /* generate a pulse on the enable signal */
 void lcd_enable(void){
-	gpio_set_value(gpios[0], 1);
+	gpio_set_value(gpios[0], 1);	// gpiosp[0] is the enable pin
 	msleep(20);
-	gpio_set_value(gpios[0], 0);
+	gpio_set_value(gpios[0], 0);	// gpiosp[0] is the enable pin
 }
 
 /* set 8 bit data bus */
 void lcd_send_byte(char data){
 	int i;
 	for(i = 0; i < 8; i++){
+		/* gpios[2] to gpios[9] are the data pins */
 		gpio_set_value(gpios[i+2], ((data) & (1<<i)) >> i);
 	}
 	lcd_enable();
@@ -91,17 +92,16 @@ static ssize_t driver_write(struct file *file, const char *usr_buffer, size_t co
 	for(int i = 0; i < to_copy; i++){
 		lcd_data(lcd_buffer[i]);
 	}
-
 	return delta;
 }
 
 static int driver_open(struct inode *driver_file, struct file *instance){
-	printk("dev_num - open was called!\n");
+	printk("LCD_Driver - open was called!\n");
 	return 0;
 }
 
 static int driver_close(struct inode *driver_file, struct file *instance){
-	printk("dev_num - close was called!\n");
+	printk("LCD_Driver - close was called!\n");
 	return 0;
 }
 
@@ -125,7 +125,7 @@ static int __init ModuleInit(void)
 		printk("device number cant be allocated!\n");
 		return -1;
 	}
-	printk("read_write - device number Major: %d, Minor: %d was registered!\n", my_dev_num >> 20, my_dev_num && 0xfffff);
+	printk("Device number Major: %d, Minor: %d was registered!\n", my_dev_num >> 20, my_dev_num && 0xfffff);
 
 	/* create device class*/
 	if((my_class = class_create(DRIVER_CLASS)) == NULL){
