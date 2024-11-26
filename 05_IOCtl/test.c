@@ -20,7 +20,7 @@ int main()
         ioctl(dev, RD_VALUE, (int32_t*) &value);
         printf("Initial value is %d\n", value);
 
-        printf("Enter the Value to send\n");
+        printf("Enter the Value to send:\n");
         scanf("%d",&value);
         printf("Writing Value to Driver\n");
         ioctl(dev, WR_VALUE, (int32_t*) &value); 
